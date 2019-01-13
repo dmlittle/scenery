@@ -1,0 +1,37 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/golang:1.11.4
+    working_directory: /go/src/github.com/dmlittle/scenery
+    steps:
+      - restore_cache:
+          keys:
+            - source-v1-{{ .Branch }}-{{ .Revision }}
+            - source-v1-{{ .Branch }}-
+            - source-v1-
+      - checkout
+      - save_cache:
+          key: source-v1-{{ .Branch }}-{{ .Revision }}
+          paths:
+            - /go/src/github.com/dmlittle/scenery/.git
+      - restore_cache:
+          keys:
+            - vendor-{{ checksum "Gopkg.lock" }}
+      - run:
+          name: Install project tools
+          command: make install_tools
+      - run:
+          name: Install dependencies
+          command: dep ensure -vendor-only
+      - save_cache:
+          key: vendor-{{ checksum "Gopkg.lock" }}
+          paths:
+            - /go/src/github.com/dmlittle/scenery/vendor
+            - ~/.cache/go-build
+      - run:
+          name: Run linter
+          command: make lint
+      - run:
+          name: Run tests
+          command: make test
