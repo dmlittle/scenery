@@ -1,0 +1,18 @@
+
+  + module.module_name
+      id:       <computed>
+      username: "scenery"
+      password: <sensitive>
+
+  + module.module.name
+
+  + module.module-name
+
+  + module.module_name[0]
+
+  ~ module.module_name
+      policy:    "{\n  \"Version\": \"1234\"\n}" => "{\n  \"Version\": \"5678\"\n}"
+      attribute: "" => <computed>
+
+  -/+ aws_instance.example (new resource required)
+    ami: "ami-2757f631" => "ami-b374d5a5" (forces new resource)

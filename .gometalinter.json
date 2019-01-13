@@ -1,0 +1,17 @@
+{
+  "Enable": [
+    "deadcode",
+    "goconst",
+    "gocyclo",
+    "gofmt",
+    "goimports",
+    "golint",
+    "gosec",
+    "gotype",
+    "gotypex",
+    "ineffassign",
+    "misspell",
+    "vet",
+    "vetshadow"
+  ]
+}

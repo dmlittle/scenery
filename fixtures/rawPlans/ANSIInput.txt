@@ -1,0 +1,2 @@
+  [32m  [32m+[0m [32maws_s3_bucket.demo
+  [0m      id:                          <computed>
