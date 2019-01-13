@@ -1,6 +1,10 @@
 # Scenery
 Scenery is a zero dependencies CLI tool to prettify `terraform plan` outputs to be easier to read and digest. A lot of inspiration was drawn from [Terraform Landscape](https://github.com/coinbase/terraform-landscape).
 
+<p align="center">
+  <img src="https://s3.amazonaws.com/scenery-public-assets/scenery_recording.svg">
+</p>
+
 ## Installing
 
 If you have a functional Go environment, you can install `scenery` with the following command:
