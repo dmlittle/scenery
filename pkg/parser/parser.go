@@ -74,15 +74,6 @@ type Attribute struct {
 	_             *string `parser:"\"\\n\""`
 }
 
-// DEBUG HELPER
-// func() participle.Option {
-// 	fmt.Printf("%#v\n", lexer.SymbolsByRune(lexer.TextScannerLexer))
-// 	return participle.Map(func(token lexer.Token) (lexer.Token, error) {
-// 		fmt.Printf("%#v\n", token)
-// 		return token, nil
-// 	})
-// }(),
-
 const noChanges = "NO_CHANGES_STRING"
 
 // ErrParseFailure is returned by parser.Parse when the input string is unable
@@ -95,6 +86,13 @@ var ErrParseFailure = errors.New("validator not registered")
 // The ParseFailureErr error is returned the string is not able to be parsed
 // properly by the grammar.
 func Parse(inputPlan string) (*Plan, error) {
+	defer func() {
+		// Parse will panic in the event of unrecognized character sequences or
+		// unsupported tokens. If we cannot parse the input it means it's not a
+		// valid terraform plan. We'll recover and return the original input.
+		recover()
+	}()
+
 	p, err := participle.Build(&Plan{}, participle.Lexer(&SceneryDefinition{}))
 	if err != nil {
 		return &Plan{}, err

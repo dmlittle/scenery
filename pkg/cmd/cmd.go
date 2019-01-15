@@ -42,6 +42,10 @@ func runScenery(cmd *cobra.Command, args []string) {
 	var input string
 	var foundInput bool
 
+	if noColor {
+		color.NoColor = true
+	}
+
 	stat, _ := os.Stdin.Stat() // nolint: gosec
 
 	if (stat.Mode() & os.ModeCharDevice) == 0 {
@@ -69,14 +73,18 @@ func runScenery(cmd *cobra.Command, args []string) {
 		plan, err := parser.Parse(input)
 		if err != nil {
 			if err == parser.ErrParseFailure {
-				os.Stderr.WriteString("Failed to parse plan. Returning original input.\n") // nolint: gosec
+				os.Stderr.WriteString(color.RedString("Failed to parse plan. Returning original input.\n")) // nolint: gosec
 				fmt.Println(input)
 				return
 			}
 		}
 
-		if noColor {
-			color.NoColor = true
+		// plan will be nil if the parser panicked (potentially due to unrecognized
+		// character or sequences) so we return the original input.
+		if plan == nil {
+			os.Stderr.WriteString(color.RedString("Failed to parse plan. Returning original input.\n")) // nolint: gosec
+			fmt.Println(input)
+			return
 		}
 
 		printer.PrettyPrint(plan)
