@@ -115,10 +115,18 @@ func processComplexAttributes(a *parser.Attribute, indentLength int) {
 		isBeforeJSON := json.Valid(bBefore) && (*a.Before)[0] == '{'
 		isAfterJSON := json.Valid(bAfter) && (*a.After)[0] == '{'
 
+		var old, new map[string]interface{}
+
+		json.Unmarshal(bBefore, &old) // nolint:gosec
+		json.Unmarshal(bAfter, &new)  // nolint:gosec
+
+		oldPretty, _ := json.MarshalIndent(old, "", "  ") // nolint:gosec
+		newPretty, _ := json.MarshalIndent(new, "", "  ") // nolint:gosec
+
 		if isBeforeJSON && isAfterJSON {
 			diff := difflib.UnifiedDiff{
-				A:       difflib.SplitLines(*a.Before),
-				B:       difflib.SplitLines(*a.After),
+				A:       difflib.SplitLines(string(oldPretty)),
+				B:       difflib.SplitLines(string(newPretty)),
 				Context: 5,
 				Eol:     "\n",
 			}
