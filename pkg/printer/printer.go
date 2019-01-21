@@ -106,7 +106,11 @@ func processComplexAttributes(a *parser.Attribute, indentLength int) {
 	isBeforeReference := isTerraformReference(a.Before)
 	isAfterReference := isTerraformReference(a.After)
 
-	if isBeforeReference != isAfterReference || (isBeforeReference && isAfterReference) || *a.Before == "" || *a.After == "" || *a.Before == *a.After {
+	if *a.Before == *a.After {
+		return
+	}
+
+	if isBeforeReference != isAfterReference || (isBeforeReference && isAfterReference) || *a.Before == "" || *a.After == "" {
 		printComplexAttribute(*a.Key, *a.Before, *a.After, false, a.NewResource, indentLength)
 	} else {
 		bBefore := []byte(*a.Before)
