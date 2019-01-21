@@ -2,7 +2,6 @@
   "Enable": [
     "deadcode",
     "goconst",
-    "gocyclo",
     "gofmt",
     "goimports",
     "golint",

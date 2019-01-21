@@ -106,16 +106,16 @@ func processComplexAttributes(a *parser.Attribute, indentLength int) {
 	isBeforeReference := isTerraformReference(a.Before)
 	isAfterReference := isTerraformReference(a.After)
 
-	if isBeforeReference != isAfterReference || (isBeforeReference && isAfterReference) || *a.Before == "" || *a.After == "" {
+	if isBeforeReference != isAfterReference || (isBeforeReference && isAfterReference) || *a.Before == "" || *a.After == "" || *a.Before == *a.After {
 		printComplexAttribute(*a.Key, *a.Before, *a.After, false, a.NewResource, indentLength)
 	} else {
 		bBefore := []byte(*a.Before)
 		bAfter := []byte(*a.After)
 
-		isBeforeJSON := json.Valid(bBefore) && (*a.Before)[0] == '{'
-		isAfterJSON := json.Valid(bAfter) && (*a.After)[0] == '{'
+		isBeforeJSON := json.Valid(bBefore) && ((*a.Before)[0] == '{' || (*a.Before)[0] == '[')
+		isAfterJSON := json.Valid(bAfter) && ((*a.After)[0] == '{' || (*a.After)[0] == '[')
 
-		var old, new map[string]interface{}
+		var old, new interface{}
 
 		json.Unmarshal(bBefore, &old) // nolint:gosec
 		json.Unmarshal(bAfter, &new)  // nolint:gosec
@@ -128,13 +128,10 @@ func processComplexAttributes(a *parser.Attribute, indentLength int) {
 				A:       difflib.SplitLines(string(oldPretty)),
 				B:       difflib.SplitLines(string(newPretty)),
 				Context: 5,
-				Eol:     "\n",
 			}
 			diffText, _ := difflib.GetUnifiedDiffString(diff) // nolint: gosec
 
-			headerIndex := strings.Index(diffText, "\n")
-
-			printDiffAttribute(*a.Key, diffText[headerIndex+1:], indentLength)
+			printDiffAttribute(*a.Key, diffText, indentLength)
 		} else {
 			printComplexAttribute(*a.Key, *a.Before, *a.After, false, a.NewResource, indentLength)
 		}
@@ -187,13 +184,21 @@ func printDiffAttribute(key, diff string, maxKeyLength int) {
 	diffPadding := strings.Repeat(" ", diffIdentLength)
 
 	var padding string
+	printedFirstLine := true
 	lines := strings.Split(diff, "\n")
 	for i, l := range lines {
-		if i == 0 {
+		// Skip diff control lines (@@ -132,8 +134,8 @@)
+		if strings.HasPrefix(l, "@@") && strings.HasSuffix(l, "@@") {
+			continue
+		}
+
+		if printedFirstLine {
 			padding = ""
+			printedFirstLine = false
 		} else {
 			padding = diffPadding
 		}
+
 		if len(l) > 0 && l[0] == '+' {
 			fmt.Printf("%s%s", padding, greenSprintf(l))
 		} else if len(l) > 0 && l[0] == '-' {
@@ -209,9 +214,9 @@ func printDiffAttribute(key, diff string, maxKeyLength int) {
 }
 
 func formatValue(value string, indentLength int) string {
-	if json.Valid([]byte(value)) && value[0] == '{' {
-		// Is JSON object?
-		var j map[string]interface{}
+	if json.Valid([]byte(value)) {
+		// Is JSON?
+		var j interface{}
 
 		json.Unmarshal([]byte(value), &j) // nolint:gosec
 
