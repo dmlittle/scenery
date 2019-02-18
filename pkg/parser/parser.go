@@ -64,7 +64,7 @@ type Header struct {
 //   `policy_arn:      "arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole"``
 //   `allow_overwrite: "" => "true"`
 type Attribute struct {
-	Key           *string `parser:"@(Ident { \".\" | \"#\" | \"%\" | \"~\"| Ident | Float }) \":\""`
+	Key           *string `parser:"@(Ident { \".\" | \"#\" | \"%\" | \"~\" | \"/\" | Ident | Float }) \":\""`
 	Before        *string `parser:"((@String \"=\" \">\""`
 	After         *string `parser:"  (@String"`
 	AfterComputed *string `parser:" 	| @(\"<\" Ident \">\")))"`

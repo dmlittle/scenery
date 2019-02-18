@@ -204,6 +204,10 @@ func TestParse(t *testing.T) {
 							After:       String("ami-b374d5a5"),
 							NewResource: true,
 						},
+						{
+							Key:   String("instance_tags.k8s.io/role/master"),
+							Value: String("1"),
+						},
 					},
 				},
 			}}
