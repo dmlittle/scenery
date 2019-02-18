@@ -15,4 +15,5 @@
       attribute: "" => <computed>
 
   -/+ aws_instance.example (new resource required)
-    ami: "ami-2757f631" => "ami-b374d5a5" (forces new resource)
+    ami:                              "ami-2757f631" => "ami-b374d5a5" (forces new resource)
+    instance_tags.k8s.io/role/master: "1"
