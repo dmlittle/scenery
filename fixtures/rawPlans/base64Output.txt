@@ -1,0 +1,9 @@
+~ aws_instance.example
+    userd_data_hash:  "e32a558d4e72c9157173e8b0f9e64f4ec59b6e857b79b2a5e71084fe6f4f1dbd" => "c37647d0ba0c466d9f36039dea07426394f74d76a739f55e904d3e5c31abdfc4" 
+    user_data_base64:  #! /bin/bash
+                       
+                      -echo "foo"
+                      +echo "bar"
+                       
+                      
+
