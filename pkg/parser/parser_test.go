@@ -208,6 +208,10 @@ func TestParse(t *testing.T) {
 							Key:   String("instance_tags.k8s.io/role/master"),
 							Value: String("1"),
 						},
+						{
+							Key:   String("k8s.io/cluster-autoscaler"),
+							Value: String("nodes"),
+						},
 					},
 				},
 			}}
