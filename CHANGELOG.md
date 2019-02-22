@@ -1,4 +1,13 @@
 
+<a name="v0.1.2"></a>
+## [v0.1.2](https://github.com/dmlittle/scenery/compare/v0.1.1...v0.1.2) (2019-02-20)
+
+### Bug Fixes
+
+* **parser:** allow hyphen in attribute keys ([#15](https://github.com/dmlittle/scenery/issues/15))
+* **parser:** allow slash symbols in attribute keys ([#14](https://github.com/dmlittle/scenery/issues/14))
+
+
 <a name="v0.1.1"></a>
 ## [v0.1.1](https://github.com/dmlittle/scenery/compare/v0.1.0...v0.1.1) (2019-01-20)
 
