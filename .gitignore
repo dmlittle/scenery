@@ -6,6 +6,7 @@
 .vscode/
 tsconfig.json
 jsconfig.json
+.idea
 
 ### Go ###
 # Binaries for programs and plugins

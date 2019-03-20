@@ -3,6 +3,7 @@ GOTOOLS := \
 	github.com/git-chglog/git-chglog/cmd/git-chglog \
 	github.com/golang/dep/cmd/dep \
 	golang.org/x/tools/cmd/cover \
+	github.com/stretchr/testify/assert \
 
 DIRS     ?= $(shell find . -name '*.go' | grep --invert-match 'vendor' | xargs -n 1 dirname | sort --unique)
 PKG_NAME ?= scenery
