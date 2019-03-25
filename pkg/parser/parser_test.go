@@ -66,6 +66,33 @@ func TestParse(t *testing.T) {
 		assert.Equal(tt, expected, plan)
 	})
 
+	t.Run("parses resources with alphanumeric header values", func(tt *testing.T) {
+		input, err := ioutil.ReadFile("../../fixtures/processedPlans/alphanumericHeader.txt")
+		assert.NoError(tt, err)
+
+		expected := &Plan{
+			Resources: []*Resource{
+				{
+					Header: &Header{
+						Change: String("~"),
+						Name:   String("aws_subnet.dvo-vpc-1c"),
+					},
+					Attributes: []*Attribute{
+						{
+							Key:      String("id"),
+							Computed: String("<computed>"),
+						},
+					},
+				},
+			},
+		}
+
+		plan, err := Parse(string(input))
+		assert.NoError(t, err)
+
+		assert.Equal(tt, expected, plan)
+	})
+
 	t.Run("parses all types of resource changes", func(tt *testing.T) {
 		input, err := ioutil.ReadFile("../../fixtures/processedPlans/resourceChangeTypes.txt")
 		assert.NoError(tt, err)

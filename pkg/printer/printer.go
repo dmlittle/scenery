@@ -1,10 +1,12 @@
 package printer
 
 import (
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"regexp"
 	"strings"
+	"unicode"
 
 	"github.com/dmlittle/scenery/pkg/parser"
 	"github.com/fatih/color"
@@ -119,6 +121,18 @@ func processComplexAttributes(a *parser.Attribute, indentLength int) {
 		isBeforeJSON := json.Valid(bBefore) && ((*a.Before)[0] == '{' || (*a.Before)[0] == '[')
 		isAfterJSON := json.Valid(bAfter) && ((*a.After)[0] == '{' || (*a.After)[0] == '[')
 
+		isBeforeBase64 := false
+		oldString, err := base64.StdEncoding.DecodeString(string(bBefore))
+		if err == nil {
+			isBeforeBase64 = true
+		}
+
+		isAfterBase64 := false
+		newString, err := base64.StdEncoding.DecodeString(string(bAfter))
+		if err == nil {
+			isAfterBase64 = true
+		}
+
 		var old, new interface{}
 
 		json.Unmarshal(bBefore, &old) // nolint:gosec
@@ -131,6 +145,15 @@ func processComplexAttributes(a *parser.Attribute, indentLength int) {
 			diff := difflib.UnifiedDiff{
 				A:       difflib.SplitLines(string(oldPretty)),
 				B:       difflib.SplitLines(string(newPretty)),
+				Context: 5,
+			}
+			diffText, _ := difflib.GetUnifiedDiffString(diff) // nolint: gosec
+
+			printDiffAttribute(*a.Key, diffText, indentLength)
+		} else if isBeforeBase64 && isAfterBase64 && isASCII(oldString) && isASCII(newString) {
+			diff := difflib.UnifiedDiff{
+				A:       difflib.SplitLines(string(oldString)),
+				B:       difflib.SplitLines(string(newString)),
 				Context: 5,
 			}
 			diffText, _ := difflib.GetUnifiedDiffString(diff) // nolint: gosec
@@ -275,6 +298,16 @@ func printMetadata(metadata *parser.Metadata) {
 func isTerraformReference(s *string) bool {
 	terraformReference := regexp.MustCompile(`\$\{[a-zA-Z-_\.]+\}`)
 	return terraformReference.MatchString(*s)
+}
+
+func isASCII(b []byte) bool {
+	s := string(b)
+	for i := 0; i < len(s); i++ {
+		if s[i] > unicode.MaxASCII {
+			return false
+		}
+	}
+	return true
 }
 
 func getTypeColor(c *string) *color.Color {
