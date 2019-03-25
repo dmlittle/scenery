@@ -66,8 +66,8 @@ func TestParse(t *testing.T) {
 		assert.Equal(tt, expected, plan)
 	})
 
-	t.Run("parses resources with hyphens", func(tt *testing.T) {
-		input, err := ioutil.ReadFile("../../fixtures/processedPlans/simpleWithHyphens.txt")
+	t.Run("parses resources with alphanumeric header values", func(tt *testing.T) {
+		input, err := ioutil.ReadFile("../../fixtures/processedPlans/alphanumericHeader.txt")
 		assert.NoError(tt, err)
 
 		expected := &Plan{
@@ -76,6 +76,12 @@ func TestParse(t *testing.T) {
 					Header: &Header{
 						Change: String("~"),
 						Name:   String("aws_subnet.dvo-vpc-1c"),
+					},
+					Attributes: []*Attribute{
+						{
+							Key:      String("id"),
+							Computed: String("<computed>"),
+						},
 					},
 				},
 			},

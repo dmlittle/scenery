@@ -50,7 +50,7 @@ type Resource struct {
 //   `-/+ module.module_name (new resource required)`
 type Header struct {
 	Change      *string `parser:"@(\"-\" \"/\" \"+\" | \"<\" \"=\" | \"+\" | \"-\" | \"~\")"`
-	Name        *string `parser:"@(Ident { (\".\" | \"-\") Ident | \"[\" Int \"]\" })"`
+	Name        *string `parser:"@(Ident { (\".\" | \"-\") (Ident | Int)+ | \"[\" Int \"]\" })"`
 	Taint       bool    `parser:"{ @(\"(\" \"tainted\" \")\") }"`
 	NewResource bool    `parser:"{ @(\"(\" \"new\" \"resource\" \"required\" \")\") }"`
 	_           *string `parser:"\"\\n\""`
