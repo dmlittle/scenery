@@ -1,0 +1,2 @@
+~ aws_subnet.dvo-vpc-1c
+      id: <computed>
