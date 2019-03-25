@@ -70,3 +70,19 @@ func captureOutput(f func()) string {
 	writer.Close()
 	return <-out
 }
+
+func TestPrint(t *testing.T) {
+	t.Run("parses simple plans", func(tt *testing.T) {
+		input := "this:\n  is:\n    an:\n      - example"
+
+		expected := "this:\n" +
+			"         is:\n" +
+			"           an:\n" +
+			"             - example"
+
+		value := formatValue(input, 1)
+
+		assert.Equal(tt, expected, value)
+	})
+
+}

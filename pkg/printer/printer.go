@@ -263,9 +263,7 @@ func formatValue(value string, indentLength int) string {
 
 		formattedValue := strings.Replace(value, "\n", newlineReplacement, -1)
 
-		lastNewlineIndex := strings.LastIndex(formattedValue, "\n")
-
-		return formattedValue[:lastNewlineIndex]
+		return formattedValue
 	}
 
 	return value
