@@ -80,13 +80,9 @@ func TestPrint(t *testing.T) {
 			"           an:\n" +
 			"             - example"
 
-		value := formatValue(string(input), 1)
+		value := formatValue(input, 1)
 
 		assert.Equal(tt, expected, value)
 	})
 
-}
-
-func String(v string) *string {
-	return &v
 }
