@@ -20,6 +20,7 @@ func TestPrintPlan(t *testing.T) {
 		outputFile string
 	}{
 		{"../../fixtures/rawPlans/base64Input.txt", "../../fixtures/rawPlans/base64Output.txt"},
+		{"../../fixtures/rawPlans/multilineAttributeInput.txt", "../../fixtures/rawPlans/multilineAttributeOutput.txt"},
 	}
 
 	for _, tc := range cases {
@@ -69,20 +70,4 @@ func captureOutput(f func()) string {
 	f()
 	writer.Close()
 	return <-out
-}
-
-func TestPrint(t *testing.T) {
-	t.Run("parses simple plans", func(tt *testing.T) {
-		input := "this:\n  is:\n    an:\n      - example"
-
-		expected := "this:\n" +
-			"         is:\n" +
-			"           an:\n" +
-			"             - example"
-
-		value := formatValue(input, 1)
-
-		assert.Equal(tt, expected, value)
-	})
-
 }

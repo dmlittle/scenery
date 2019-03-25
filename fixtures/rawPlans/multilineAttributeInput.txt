@@ -1,0 +1,9 @@
+Terraform will perform the following actions:
+
+  + local_file.config
+      id:       <computed>
+      content:  "this:\n  is:\n    an:\n      -example\n"
+      filename: "output.yaml"
+
+
+Plan: 1 to add, 0 to change, 0 to destroy.

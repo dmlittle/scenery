@@ -1,0 +1,10 @@
++ local_file.config
+    id:       <computed>
+    content:  "this:
+                 is:
+                   an:
+                     -example
+               "
+    filename: "output.yaml"
+
+Plan: 1 to add, 0 to change, 0 to destroy.
