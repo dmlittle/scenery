@@ -1,6 +1,24 @@
 
+<a name="v0.1.3"></a>
+## [v0.1.3](https://github.com/dmlittle/scenery/compare/v0.1.2...v0.1.3) (2019-03-25)
+
+### Bug Fixes
+
+* **parser:** allow alphanumeric header values ([#21](https://github.com/dmlittle/scenery/issues/21))
+* **print:** remove bug with trimming trailing new line in multi line text ([#19](https://github.com/dmlittle/scenery/issues/19))
+
+### Chore
+
+* **test:** fix multiline printer test
+* **test:** add hyphen test ([#20](https://github.com/dmlittle/scenery/issues/20))
+
+### Features
+
+* **diff:** add diff for base64 values ([#16](https://github.com/dmlittle/scenery/issues/16))
+
+
 <a name="v0.1.2"></a>
-## [v0.1.2](https://github.com/dmlittle/scenery/compare/v0.1.1...v0.1.2) (2019-02-20)
+## [v0.1.2](https://github.com/dmlittle/scenery/compare/v0.1.1...v0.1.2) (2019-02-22)
 
 ### Bug Fixes
 
