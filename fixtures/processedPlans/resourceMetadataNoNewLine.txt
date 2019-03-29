@@ -1,0 +1,4 @@
++ local_file.config
+      id:                <computed>
+      filename:          "config.yaml"
+Plan: 1 to add, 0 to change, 0 to destroy.

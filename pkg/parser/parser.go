@@ -78,7 +78,7 @@ const noChanges = "NO_CHANGES_STRING"
 
 // ErrParseFailure is returned by parser.Parse when the input string is unable
 // to be parsed.
-var ErrParseFailure = errors.New("validator not registered")
+var ErrParseFailure = errors.New("parse failure error")
 
 // Parse takes in an Terraform plan output string and returns a parsed
 // representation in the form of a Plan struct.
@@ -93,7 +93,11 @@ func Parse(inputPlan string) (*Plan, error) {
 		recover()
 	}()
 
-	p, err := participle.Build(&Plan{}, participle.Lexer(&SceneryDefinition{}))
+	p, err := participle.Build(
+		&Plan{},
+		participle.Lexer(&SceneryDefinition{}),
+		participle.UseLookahead(3),
+	)
 	if err != nil {
 		return &Plan{}, err
 	}
