@@ -248,6 +248,42 @@ func TestParse(t *testing.T) {
 
 		assert.Equal(tt, expected, plan)
 	})
+
+	t.Run("parses plan with no newline between resources and metadata", func(tt *testing.T) {
+		input, err := ioutil.ReadFile("../../fixtures/processedPlans/resourceMetadataNoNewLine.txt")
+		assert.NoError(tt, err)
+
+		expected := &Plan{
+			Resources: []*Resource{
+				{
+					Header: &Header{
+						Change: String("+"),
+						Name:   String("local_file.config"),
+					},
+					Attributes: []*Attribute{
+						{
+							Key:      String("id"),
+							Computed: String("<computed>"),
+						},
+						{
+							Key:   String("filename"),
+							Value: String("config.yaml"),
+						},
+					},
+				},
+			},
+			Metadata: &Metadata{
+				Add:     1,
+				Change:  0,
+				Destroy: 0,
+			},
+		}
+
+		plan, err := Parse(string(input))
+		assert.NoError(t, err)
+
+		assert.Equal(tt, expected, plan)
+	})
 }
 
 func String(v string) *string {
