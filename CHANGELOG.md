@@ -1,4 +1,16 @@
 
+<a name="v0.1.4"></a>
+## [v0.1.4](https://github.com/dmlittle/scenery/compare/v0.1.3...v0.1.4) (2019-03-28)
+
+### Bug Fixes
+
+* **parsing:** enable lookahead of 3 ([#23](https://github.com/dmlittle/scenery/issues/23))
+
+### Chore
+
+* **cleanup:** remove empty test file
+
+
 <a name="v0.1.3"></a>
 ## [v0.1.3](https://github.com/dmlittle/scenery/compare/v0.1.2...v0.1.3) (2019-03-25)
 
