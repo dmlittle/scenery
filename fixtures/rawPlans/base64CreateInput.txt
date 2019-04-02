@@ -1,0 +1,3 @@
++ aws_instance.master
+    id:               <computed>
+    user_data_base64: "IyEvYmluL2Jhc2gKCmZvciAoKCBjb3VudGVyPTEwOyBjb3VudGVyPjA7IGNvdW50ZXItLSApKQpkbwogIGVjaG8gLW4gIiRjb3VudGVyICIKZG9uZQogIHByaW50ZiAiXG4iCg=="

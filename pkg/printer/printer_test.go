@@ -20,6 +20,7 @@ func TestPrintPlan(t *testing.T) {
 		outputFile string
 	}{
 		{"../../fixtures/rawPlans/base64Input.txt", "../../fixtures/rawPlans/base64Output.txt"},
+		{"../../fixtures/rawPlans/base64CreateInput.txt", "../../fixtures/rawPlans/base64CreateOutput.txt"},
 		{"../../fixtures/rawPlans/multilineAttributeInput.txt", "../../fixtures/rawPlans/multilineAttributeOutput.txt"},
 	}
 
