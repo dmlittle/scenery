@@ -264,6 +264,9 @@ func formatValue(value string, indentLength int) string {
 		formattedValue := strings.Replace(value, "\n", newlineReplacement, -1)
 
 		return formattedValue
+	} else if decodedString, err := base64.StdEncoding.DecodeString(value); err == nil && isASCII(decodedString) {
+
+		return formatValue(string(decodedString), indentLength)
 	}
 
 	return value
