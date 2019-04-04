@@ -265,8 +265,14 @@ func formatValue(value string, indentLength int) string {
 
 		return formattedValue
 	} else if decodedString, err := base64.StdEncoding.DecodeString(value); err == nil && isASCII(decodedString) {
+		// 4 (attribute padding) + 1 (key/value space separation) + 1 (opening quote for value ")
+		multiIdentLength := indentLength + 4 + 1 + 1
 
-		return formatValue(string(decodedString), indentLength)
+		newlineReplacement := fmt.Sprintf("\n%s", strings.Repeat(" ", multiIdentLength))
+
+		formattedValue := strings.Replace(string(decodedString), "\n", newlineReplacement, -1)
+
+		return formattedValue
 	}
 
 	return value
