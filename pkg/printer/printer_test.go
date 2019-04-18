@@ -22,6 +22,7 @@ func TestPrintPlan(t *testing.T) {
 		{"../../fixtures/rawPlans/base64Input.txt", "../../fixtures/rawPlans/base64Output.txt"},
 		{"../../fixtures/rawPlans/base64CreateInput.txt", "../../fixtures/rawPlans/base64CreateOutput.txt"},
 		{"../../fixtures/rawPlans/multilineAttributeInput.txt", "../../fixtures/rawPlans/multilineAttributeOutput.txt"},
+		{"../../fixtures/rawPlans/floatInput.txt", "../../fixtures/rawPlans/floatOutput.txt"},
 	}
 
 	for _, tc := range cases {

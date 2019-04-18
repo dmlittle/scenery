@@ -135,8 +135,13 @@ func processComplexAttributes(a *parser.Attribute, indentLength int) {
 
 		var old, new interface{}
 
-		json.Unmarshal(bBefore, &old) // nolint:gosec
-		json.Unmarshal(bAfter, &new)  // nolint:gosec
+		beforeDecoder := json.NewDecoder(strings.NewReader(*a.Before))
+		beforeDecoder.UseNumber()
+		beforeDecoder.Decode(&old) // nolint:gosec
+
+		afterDecoder := json.NewDecoder(strings.NewReader(*a.After))
+		afterDecoder.UseNumber()
+		afterDecoder.Decode(&new) // nolint:gosec
 
 		oldPretty, _ := json.MarshalIndent(old, "", "  ") // nolint:gosec
 		newPretty, _ := json.MarshalIndent(new, "", "  ") // nolint:gosec
@@ -245,7 +250,9 @@ func formatValue(value string, indentLength int) string {
 		// Is JSON?
 		var j interface{}
 
-		json.Unmarshal([]byte(value), &j) // nolint:gosec
+		decoder := json.NewDecoder(strings.NewReader(value))
+		decoder.UseNumber()
+		decoder.Decode(&j) // nolint:gosec
 
 		// 4 (attribute padding) + 1 (key/value space separation) + 1 (opening quote for value ")
 		jsonIdentLegth := indentLength + 4 + 1 + 1
