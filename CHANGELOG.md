@@ -1,4 +1,17 @@
 
+<a name="v0.1.5"></a>
+## [v0.1.5](https://github.com/dmlittle/scenery/compare/v0.1.4...v0.1.5) (2019-04-17)
+
+### Bug Fixes
+
+* **number:** fix printing float precision ([#29](https://github.com/dmlittle/scenery/issues/29))
+* **print:** remove infinite recursion in formatValue fn ([#27](https://github.com/dmlittle/scenery/issues/27))
+
+### Features
+
+* **base64:** decode base64 simple output if possible ([#25](https://github.com/dmlittle/scenery/issues/25))
+
+
 <a name="v0.1.4"></a>
 ## [v0.1.4](https://github.com/dmlittle/scenery/compare/v0.1.3...v0.1.4) (2019-03-28)
 
