@@ -191,7 +191,6 @@ func TestParse(t *testing.T) {
 		assert.Equal(tt, expected, plan)
 	})
 
-
 	t.Run("parses complex plan", func(tt *testing.T) {
 		input, err := ioutil.ReadFile("../../fixtures/processedPlans/complex.txt")
 		assert.NoError(tt, err)
