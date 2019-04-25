@@ -156,6 +156,41 @@ func TestParse(t *testing.T) {
 		assert.Equal(tt, expected, plan)
 	})
 
+	t.Run("parses weird keys plan", func(tt *testing.T) {
+		input, err := ioutil.ReadFile("../../fixtures/processedPlans/weirdKeys.txt")
+		assert.NoError(tt, err)
+
+		expected := &Plan{
+			Resources: []*Resource{
+				{
+					Header: &Header{
+						Change:      String("~"),
+						Name:        String("module.module_name"),
+						NewResource: false,
+					},
+					Attributes: []*Attribute{
+						{
+							Key:         String("silenced.%"),
+							Before:      String("1"),
+							After:       String("0"),
+							NewResource: false,
+						},
+						{
+							Key:         String("silenced.*"),
+							Before:      String("1556205536"),
+							After:       String(""),
+							NewResource: false,
+						},
+					},
+				},
+			}}
+
+		plan, err := Parse(string(input))
+		assert.NoError(t, err)
+
+		assert.Equal(tt, expected, plan)
+	})
+
 	t.Run("parses complex plan", func(tt *testing.T) {
 		input, err := ioutil.ReadFile("../../fixtures/processedPlans/complex.txt")
 		assert.NoError(tt, err)

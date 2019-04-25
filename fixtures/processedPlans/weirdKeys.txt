@@ -1,0 +1,4 @@
+
+  ~ module.module_name
+      silenced.%: "1" => "0"
+      silenced.*: "1556205536" => ""
