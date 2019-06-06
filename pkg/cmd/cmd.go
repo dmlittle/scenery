@@ -104,6 +104,7 @@ func runScenery(cmd *cobra.Command, args []string) {
 		}
 
 		input = string(fileContents)
+		printPlan(input)
 	} else {
 		// If no stdin or arguments, print usage
 		cmd.Usage() // nolint: gosec
