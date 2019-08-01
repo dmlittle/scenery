@@ -155,7 +155,7 @@ func preprocessPlan(planText string) (string, []string) {
 	// Strip preface
 	pathRE := regexp.MustCompile("Path:[^\n]+\n")
 	actionsRE := regexp.MustCompile("Terraform will perform the following actions:.*\n")
-	noopPlanRE := regexp.MustCompile("(No changes|This plan does nothing).*\n")
+	noopPlanRE := regexp.MustCompile("(No changes|This plan does nothing)")
 	switch {
 	case pathRE.MatchString(processedPlanText):
 		matches := pathRE.FindAllStringIndex(processedPlanText, -1)
