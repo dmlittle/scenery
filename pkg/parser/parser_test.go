@@ -20,6 +20,7 @@ func TestPreprocessPlan(t *testing.T) {
 		{"../../fixtures/rawPlans/preface2Input.txt", "../../fixtures/rawPlans/preface2Output.txt", nil},
 		{"../../fixtures/rawPlans/preface3Input.txt", "../../fixtures/rawPlans/preface3Output.txt", nil},
 		{"../../fixtures/rawPlans/noChangesInput.txt", "../../fixtures/rawPlans/noChangesOutput.txt", nil},
+		{"../../fixtures/rawPlans/planNothingInput.txt", "../../fixtures/rawPlans/planNothingOutput.txt", nil},
 		{"../../fixtures/rawPlans/warningInput.txt", "../../fixtures/rawPlans/warningOutput.txt", []string{"Warning: test warning\n"}},
 		{"../../fixtures/rawPlans/postfaceInput.txt", "../../fixtures/rawPlans/postfaceOutput.txt", nil},
 	}
