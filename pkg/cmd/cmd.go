@@ -38,38 +38,9 @@ func Execute(version string) {
 	}
 }
 
-func runScenery(cmd *cobra.Command, args []string) {
-	var input string
-	var foundInput bool
-
-	if noColor {
-		color.NoColor = true
-	}
-
-	stat, _ := os.Stdin.Stat() // nolint: gosec
-
-	if (stat.Mode() & os.ModeCharDevice) == 0 {
-		var lines []string
-		scanner := bufio.NewScanner(os.Stdin)
-		for scanner.Scan() {
-			lines = append(lines, scanner.Text())
-		}
-
-		input = strings.Join(lines, "\n")
-		foundInput = true
-
-	} else if len(args) == 1 {
-		fileContents, err := ioutil.ReadFile(args[0])
-		if err != nil {
-			cmd.Usage() // nolint: gosec
-			return
-		}
-
-		input = string(fileContents)
-		foundInput = true
-	}
-
-	if foundInput {
+func printPlan(input string) {
+	// If we have input
+	if len(input) > 0 {
 		plan, err := parser.Parse(input)
 		if err != nil {
 			if err == parser.ErrParseFailure {
@@ -88,7 +59,56 @@ func runScenery(cmd *cobra.Command, args []string) {
 		}
 
 		printer.PrettyPrint(plan)
-	} else {
-		cmd.Usage() // nolint: gosec
 	}
+}
+
+func runScenery(cmd *cobra.Command, args []string) {
+	var input string
+
+	if noColor {
+		color.NoColor = true
+	}
+
+	stat, _ := os.Stdin.Stat() // nolint: gosec
+
+	if (stat.Mode() & os.ModeCharDevice) == 0 {
+		var lines []string
+		scanner := bufio.NewScanner(os.Stdin)
+		insidePlanBlock := false
+
+		// Loop through input until separator
+		for scanner.Scan() {
+			text := scanner.Text()
+			if strings.Contains(text, "------------------------------------------------------------------------") {
+				if insidePlanBlock {
+					// If we detect it again, its the end of the plan block
+					insidePlanBlock = false
+					input = strings.Join(lines, "\n")
+					printPlan(input)
+				} else {
+					// Otherwise we are entering the plan block
+					insidePlanBlock = true
+				}
+				fmt.Println(text)
+			} else if insidePlanBlock {
+				lines = append(lines, text)
+			} else {
+				fmt.Println(text)
+			}
+		}
+	} else if len(args) == 1 {
+		fileContents, err := ioutil.ReadFile(args[0])
+		if err != nil {
+			cmd.Usage() // nolint: gosec
+			return
+		}
+
+		input = string(fileContents)
+		printPlan(input)
+	} else {
+		// If no stdin or arguments, print usage
+		cmd.Usage() // nolint: gosec
+		os.Exit(0)
+	}
+
 }
