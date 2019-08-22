@@ -75,6 +75,7 @@ func runScenery(cmd *cobra.Command, args []string) {
 			if err == parser.ErrParseFailure {
 				os.Stderr.WriteString(color.RedString("Failed to parse plan. Returning original input.\n")) // nolint: gosec
 				fmt.Println(input)
+				os.Exit(1)
 				return
 			}
 		}
@@ -84,6 +85,7 @@ func runScenery(cmd *cobra.Command, args []string) {
 		if plan == nil {
 			os.Stderr.WriteString(color.RedString("Failed to parse plan. Returning original input.\n")) // nolint: gosec
 			fmt.Println(input)
+			os.Exit(1)
 			return
 		}
 
