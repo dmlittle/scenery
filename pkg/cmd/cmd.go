@@ -42,8 +42,8 @@ func runScenery(cmd *cobra.Command, args []string) {
 	var input string
 	var foundInput bool
 
-	if noColor {
-		color.NoColor = true
+	if noColor || cmd.Flags().Changed("no-color") {
+		color.NoColor = noColor
 	}
 
 	stat, _ := os.Stdin.Stat() // nolint: gosec
