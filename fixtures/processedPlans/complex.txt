@@ -8,6 +8,8 @@
 
   + module.module-name
 
+  + module.module--name
+
   + module.module_name[0]
 
   ~ module.module_name

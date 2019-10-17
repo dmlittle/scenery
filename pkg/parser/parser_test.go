@@ -233,6 +233,12 @@ func TestParse(t *testing.T) {
 				{
 					Header: &Header{
 						Change: String("+"),
+						Name:   String("module.module--name"),
+					},
+				},
+				{
+					Header: &Header{
+						Change: String("+"),
 						Name:   String("module.module_name[0]"),
 					},
 				},
